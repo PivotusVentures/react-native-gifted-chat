@@ -31,7 +31,7 @@ export default class Bubble extends React.Component {
   }
 
   renderMessageText() {
-    if (this.props.currentMessage.text) {
+    if (this.props.currentMessage.text && this.props.currentMessage.type === 'text') {
       const {containerStyle, wrapperStyle, ...messageTextProps} = this.props;
       if (this.props.renderMessageText) {
         return this.props.renderMessageText(messageTextProps);
@@ -42,7 +42,7 @@ export default class Bubble extends React.Component {
   }
 
   renderMessageImage() {
-    if (this.props.currentMessage.image) {
+    if (this.props.currentMessage.image && this.props.currentMessage.type === 'image') {
       const {containerStyle, wrapperStyle, ...messageImageProps} = this.props;
       if (this.props.renderMessageImage) {
         return this.props.renderMessageImage(messageImageProps);
@@ -96,9 +96,20 @@ export default class Bubble extends React.Component {
   }
 
   render() {
+    const widgetStyle = {
+      backgroundColor: 'transparent',
+      borderRadius: 0,
+    };
+    const wrapperStyle = [
+      styles[this.props.position].wrapper,
+      this.props.wrapperStyle[this.props.position],
+      this.handleBubbleToNext(),
+      this.handleBubbleToPrevious(),
+      this.props.currentMessage.type === 'widget' ? widgetStyle : {},
+    ];
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
-        <View style={[styles[this.props.position].wrapper, this.props.wrapperStyle[this.props.position], this.handleBubbleToNext(), this.handleBubbleToPrevious()]}>
+        <View style={wrapperStyle}>
           <TouchableWithoutFeedback
             onLongPress={this.onLongPress}
             accessibilityTraits="text"
