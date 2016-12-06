@@ -514,6 +514,7 @@ GiftedChat.propTypes = {
   renderChatFooter: React.PropTypes.func,
   renderMessageText: React.PropTypes.func,
   renderMessageImage: React.PropTypes.func,
+  renderMessageSystem: React.PropTypes.func,
   renderComposer: React.PropTypes.func,
   renderCustomView: React.PropTypes.func,
   renderDay: React.PropTypes.func,

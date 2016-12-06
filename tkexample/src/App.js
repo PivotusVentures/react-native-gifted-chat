@@ -12,10 +12,24 @@ import {
 
 import {GiftedChat} from 'react-native-gifted-chat';
 import SystemMessage from './SystemMessage';
+import WidgetMessage from './WidgetMessage';
 
 export default class TKExample extends React.Component {
   state = {
     messages: [
+      {
+        _id: 30,
+        text: 'This is a widget message',
+        type: 'widget',
+        payload: {
+          iid: '123',
+        },
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://facebook.github.io/react/img/logo_og.png',
+        },
+      },
       {
         _id: 20,
         text: "I'm trying this gifted chat out.",
@@ -23,7 +37,6 @@ export default class TKExample extends React.Component {
         user: {
           _id: 1,
           name: 'TK Feng',
-          avatar: 'https://facebook.github.io/react/img/logo_og.png',
         },
       },
       {
@@ -61,6 +74,7 @@ export default class TKExample extends React.Component {
           renderTime={()=> {
           }}
           renderMessageSystem={this._renderSystemMessage}
+          renderCustomView={this._renderCustomMessage}
           user={{
             _id: 1,
           }}
@@ -68,6 +82,18 @@ export default class TKExample extends React.Component {
       </View>
     );
   }
+
+  _renderCustomMessage = (props) => {
+    const {_id, currentMessage: {type, payload}} = props;
+    if (type === 'widget') {
+      const widgetProps = {
+        key: _id,
+      };
+      return <WidgetMessage {...widgetProps}/>;
+    }
+
+    return null;
+  };
 
   _renderSystemMessage = (props) => {
     const {_id, payload: {title, description} } = props;
