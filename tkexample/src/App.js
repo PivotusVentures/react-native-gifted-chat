@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import {GiftedChat} from 'react-native-gifted-chat';
+import SystemMessage from './SystemMessage';
 
 export default class TKExample extends React.Component {
   state = {
@@ -35,25 +36,47 @@ export default class TKExample extends React.Component {
           avatar: 'https://facebook.github.io/react/img/logo_og.png',
         },
       },
+      {
+        _id: 5,
+        text: 'System Test',
+        createdAt: new Date(Date.UTC(2016, 6, 30, 17, 20, 0)),
+        type: 'system',
+        payload: {
+          title: 'System Message',
+          description: 'This message is from the system.',
+        },
+        user: {
+          _id: 3,
+          name: 'system',
+        }
+      }
     ],
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>
-          This is TK's Example.
-        </Text>
         <GiftedChat
           messages={this.state.messages}
           renderTime={()=> {
           }}
+          renderMessageSystem={this._renderSystemMessage}
           user={{
             _id: 1,
           }}
         />
       </View>
     );
+  }
+
+  _renderSystemMessage = (props) => {
+    const {_id, payload: {title, description} } = props;
+    const systemMessageProps = {
+      key: _id,
+      title,
+      body: description,
+    };
+    return <SystemMessage {...systemMessageProps}/>;
   }
 }
 
