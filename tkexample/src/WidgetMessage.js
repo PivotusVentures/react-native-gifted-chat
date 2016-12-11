@@ -7,6 +7,7 @@ import {
   Text,
   View,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 
 export default class WidgetMessage extends React.Component {
@@ -31,6 +32,14 @@ export default class WidgetMessage extends React.Component {
         <Text>
           {this.props.body}
         </Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => this.props.onWidgetPress('iid', 'cv', 'will_answer')}
+        >
+          <Text>
+            Button
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -44,5 +53,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderColor: '#f1f3f6',
     borderWidth: 2,
+  },
+  button: {
+    backgroundColor: 'cyan',
   }
 });

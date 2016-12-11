@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import {
+  Alert,
   Platform,
   StyleSheet,
   Text,
@@ -21,8 +22,10 @@ export default class TKExample extends React.Component {
         _id: 30,
         text: 'This is a widget message',
         type: 'widget',
-        payload: {
+        widget: {
           iid: '123',
+          widgetName: 'cv',
+          widgetState: 'state1',
         },
         user: {
           _id: 2,
@@ -75,6 +78,7 @@ export default class TKExample extends React.Component {
           }}
           renderMessageSystem={this._renderSystemMessage}
           renderCustomView={this._renderCustomMessage}
+          onWidgetPress={this._onWidgetPress}
           user={{
             _id: 1,
           }}
@@ -84,9 +88,10 @@ export default class TKExample extends React.Component {
   }
 
   _renderCustomMessage = (props) => {
-    const {_id, currentMessage: {type, payload}} = props;
+    const {_id, currentMessage: {type, payload}, ...other} = props;
     if (type === 'widget') {
       const widgetProps = {
+          ...other,
         key: _id,
       };
       return <WidgetMessage {...widgetProps}/>;
@@ -103,6 +108,14 @@ export default class TKExample extends React.Component {
       body: description,
     };
     return <SystemMessage {...systemMessageProps}/>;
+  };
+
+  _onWidgetPress = (iid, widgetName, widgetState) => {
+    const alertMessage = 'iid: ' + iid + ' widget name: ' + widgetName + ' widget state: ' + widgetState;
+    Alert.alert(
+      'Widget Press',
+      alertMessage,
+    )
   }
 }
 
