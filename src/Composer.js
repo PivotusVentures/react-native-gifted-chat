@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     fontSize: 16,
     lineHeight: 16,
-    marginLeft: 10,
     marginTop: Platform.select({
       ios: 6,
       android: 0,
