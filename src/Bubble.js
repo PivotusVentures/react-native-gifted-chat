@@ -31,7 +31,7 @@ export default class Bubble extends React.Component {
   }
 
   renderMessageText() {
-    if (this.props.currentMessage.text && this.props.currentMessage.type === 'text') {
+    if (this.props.currentMessage.text) {
       const {containerStyle, wrapperStyle, ...messageTextProps} = this.props;
       if (this.props.renderMessageText) {
         return this.props.renderMessageText(messageTextProps);
@@ -42,7 +42,7 @@ export default class Bubble extends React.Component {
   }
 
   renderMessageImage() {
-    if (this.props.currentMessage.image && this.props.currentMessage.type === 'image') {
+    if (this.props.currentMessage.image) {
       const {containerStyle, wrapperStyle, ...messageImageProps} = this.props;
       if (this.props.renderMessageImage) {
         return this.props.renderMessageImage(messageImageProps);
@@ -96,23 +96,11 @@ export default class Bubble extends React.Component {
   }
 
   render() {
-    const widgetStyle = {
-      backgroundColor: 'transparent',
-      borderRadius: 0,
-    };
-    const wrapperStyle = [
-      styles[this.props.position].wrapper,
-      this.props.wrapperStyle[this.props.position],
-      this.handleBubbleToNext(),
-      this.handleBubbleToPrevious(),
-      this.props.currentMessage.type === 'widget' ? widgetStyle : {},
-    ];
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
-        <View style={wrapperStyle}>
+        <View style={[styles[this.props.position].wrapper, this.props.wrapperStyle[this.props.position], this.handleBubbleToNext(), this.handleBubbleToPrevious()]}>
           <TouchableWithoutFeedback
             onLongPress={this.onLongPress}
-            accessibilityTraits="text"
             {...this.props.touchableProps}
           >
             <View>
@@ -136,7 +124,7 @@ const styles = {
     },
     wrapper: {
       borderRadius: 15,
-      backgroundColor: 'rgb(241, 243, 246)',
+      backgroundColor: '#f0f0f0',
       marginRight: 60,
       minHeight: 20,
       justifyContent: 'flex-end',
@@ -155,7 +143,7 @@ const styles = {
     },
     wrapper: {
       borderRadius: 15,
-      backgroundColor: 'rgb(91, 204, 143)',
+      backgroundColor: '#0084ff',
       marginLeft: 60,
       minHeight: 20,
       justifyContent: 'flex-end',

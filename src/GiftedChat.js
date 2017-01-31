@@ -469,8 +469,6 @@ GiftedChat.defaultProps = {
   messages: [],
   onSend: () => {
   },
-  onWidgetPress: (iid, widgetName, widgetState) => {
-  },
   loadEarlier: false,
   onLoadEarlier: () => {
   },
@@ -504,12 +502,6 @@ GiftedChat.defaultProps = {
 GiftedChat.propTypes = {
   messages: React.PropTypes.array,
   onSend: React.PropTypes.func,
-  /**
-   * Call back when the button on a widget is pressed.
-   * It passes the iid, widget-name and widget-state to
-   * the caller.
-   */
-  onWidgetPress: React.PropTypes.func,
   loadEarlier: React.PropTypes.bool,
   onLoadEarlier: React.PropTypes.func,
   locale: React.PropTypes.string,
@@ -522,7 +514,6 @@ GiftedChat.propTypes = {
   renderChatFooter: React.PropTypes.func,
   renderMessageText: React.PropTypes.func,
   renderMessageImage: React.PropTypes.func,
-  renderMessageSystem: React.PropTypes.func,
   renderComposer: React.PropTypes.func,
   renderCustomView: React.PropTypes.func,
   renderDay: React.PropTypes.func,

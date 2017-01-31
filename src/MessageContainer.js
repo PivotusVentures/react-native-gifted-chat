@@ -109,27 +109,13 @@ export default class MessageContainer extends React.Component {
       message.user = {};
     }
 
-    let messagePosition = 'center';
-    if (message.type !== 'system') {
-      messagePosition = message.user._id === this.props.user._id ? 'right' : 'left';
-    }
-
-    if (!message.type) {
-      if (message.text) {
-        message.type = 'text';
-      }
-      else if (message.image) {
-        message.image = 'image';
-      }
-    }
-
     const messageProps = {
       ...this.props,
       key: message._id,
       currentMessage: message,
       previousMessage: message.previousMessage,
       nextMessage: message.nextMessage,
-      position: messagePosition,
+      position: message.user._id === this.props.user._id ? 'right' : 'left',
     };
 
     if (this.props.renderMessage) {

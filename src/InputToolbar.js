@@ -2,22 +2,12 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  TouchableHighlight
 } from 'react-native';
 
 import Composer from './Composer';
 import Send from './Send';
-import AddFile from './AddFile';
 
 export default class InputToolbar extends React.Component {
-  renderAddFile() {
-    if (this.props.renderAddFile) {
-      return this.props.renderAddFile(this.props)
-    }
-    return <AddFile {...this.props}/>;
-  }
-
   renderActions() {
     if (this.props.renderActions) {
       return this.props.renderActions(this.props);
@@ -59,7 +49,6 @@ export default class InputToolbar extends React.Component {
     return (
       <View style={[styles.container, this.props.containerStyle]}>
         <View style={[styles.primary, this.props.primaryStyle]}>
-          {this.renderAddFile()}
           {this.renderActions()}
           {this.renderComposer()}
           {this.renderSend()}
@@ -89,7 +78,6 @@ InputToolbar.defaultProps = {
   renderAccessory: null,
   renderActions: null,
   renderSend: null,
-  renderAddFile: null,
   renderComposer: null,
   containerStyle: {},
   primaryStyle: {},
@@ -100,7 +88,6 @@ InputToolbar.propTypes = {
   renderAccessory: React.PropTypes.func,
   renderActions: React.PropTypes.func,
   renderSend: React.PropTypes.func,
-  renderAddFile: React.PropTypes.func,
   renderComposer: React.PropTypes.func,
   containerStyle: View.propTypes.style,
   primaryStyle: View.propTypes.style,
