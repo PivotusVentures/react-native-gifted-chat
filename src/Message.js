@@ -9,7 +9,6 @@ import moment from 'moment';
 import Avatar from './Avatar';
 import Bubble from './Bubble';
 import Day from './Day';
-import MessageSystem from './MessageSystem';
 
 export default class Message extends React.Component {
 
@@ -27,8 +26,6 @@ export default class Message extends React.Component {
   }
 
   isSameUser(currentMessage = {}, diffMessage = {}) {
-    if (currentMessage.type === 'system') return false;
-    if (diffMessage.type === 'system') return false;
     if (diffMessage.user && currentMessage.user) {
       if (diffMessage.user._id === currentMessage.user._id) {
         return true;
@@ -57,7 +54,6 @@ export default class Message extends React.Component {
     const {containerStyle, ...other} = this.props;
     const bubbleProps = {
       ...other,
-      key: 'bubble' + this.props.user._id,
       isSameUser: this.isSameUser,
       isSameDay: this.isSameDay,
     };
@@ -72,7 +68,6 @@ export default class Message extends React.Component {
       const {containerStyle, ...other} = this.props;
       const avatarProps = {
         ...other,
-        key: 'avator' + this.props.user._id,
         isSameUser: this.isSameUser,
         isSameDay: this.isSameDay,
       };
@@ -82,27 +77,6 @@ export default class Message extends React.Component {
     return null;
   }
 
-  renderMessageBody() {
-    if (this.props.currentMessage.type === 'system') {
-      const systemMessageProps = {
-        ...this.props,
-        key: this.props.currentMessage._id,
-        type: this.props.currentMessage.type,
-        payload: this.props.currentMessage.payload,
-      };
-      if (this.props.renderMessageSystem) {
-        return this.props.renderMessageSystem(systemMessageProps);
-      }
-
-      return <MessageSystem {...systemMessageProps}/>;
-    }
-    return [
-      this.props.position === 'left' ? this.renderAvatar() : null,
-      this.renderBubble(),
-      this.props.position === 'right' ? this.renderAvatar() : null,
-    ];
-  }
-
   render() {
     return (
       <View>
@@ -110,7 +84,9 @@ export default class Message extends React.Component {
         <View style={[styles[this.props.position].container, {
           marginBottom: this.isSameUser(this.props.currentMessage, this.props.nextMessage) ? 2 : 10,
         }, this.props.containerStyle[this.props.position]]}>
-          {this.renderMessageBody()}
+          {this.props.position === 'left' ? this.renderAvatar() : null}
+          {this.renderBubble()}
+          {this.props.position === 'right' ? this.renderAvatar() : null}
         </View>
       </View>
     );
@@ -136,15 +112,6 @@ const styles = {
       marginRight: 8,
     },
   }),
-  center: StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      // marginLeft: 0,
-      // marginRight: 8,
-    },
-  }),
 };
 
 Message.defaultProps = {
@@ -163,8 +130,7 @@ Message.propTypes = {
   renderAvatar: React.PropTypes.func,
   renderBubble: React.PropTypes.func,
   renderDay: React.PropTypes.func,
-  renderMessageSystem: React.PropTypes.func,
-  position: React.PropTypes.oneOf(['left', 'right', 'center']),
+  position: React.PropTypes.oneOf(['left', 'right']),
   currentMessage: React.PropTypes.object,
   nextMessage: React.PropTypes.object,
   previousMessage: React.PropTypes.object,
