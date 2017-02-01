@@ -52,7 +52,7 @@ export default class MessageText extends React.Component {
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
         <ParsedText
-          style={[styles[this.props.position].text, this.props.textStyle[this.props.position]]}
+          style={[styles[this.props.position].text, this.props.textStyle[this.props.position], this.props.messageTextStyle[this.props.position]]}
           parse={[
             {type: 'url', style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onUrlPress},
             {type: 'phone', style: StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]), onPress: this.onPhonePress},
@@ -114,6 +114,7 @@ MessageText.defaultProps = {
   containerStyle: {},
   textStyle: {},
   linkStyle: {},
+  messageTextStyle: {},
 };
 
 MessageText.propTypes = {
@@ -128,6 +129,10 @@ MessageText.propTypes = {
     right: Text.propTypes.style,
   }),
   linkStyle: React.PropTypes.shape({
+    left: Text.propTypes.style,
+    right: Text.propTypes.style,
+  }),
+  messageTextStyle: React.PropTypes.shape({
     left: Text.propTypes.style,
     right: Text.propTypes.style,
   }),

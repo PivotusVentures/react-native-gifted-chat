@@ -98,7 +98,7 @@ export default class Bubble extends React.Component {
   render() {
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
-        <View style={[styles[this.props.position].wrapper, this.props.wrapperStyle[this.props.position], this.handleBubbleToNext(), this.handleBubbleToPrevious()]}>
+        <View style={[styles[this.props.position].wrapper, this.props.wrapperStyle[this.props.position], this.handleBubbleToNext(), this.handleBubbleToPrevious(), this.props.bubbleStyle[this.props.position]]}>
           <TouchableWithoutFeedback
             onLongPress={this.onLongPress}
             {...this.props.touchableProps}
@@ -130,10 +130,10 @@ const styles = {
       justifyContent: 'flex-end',
     },
     containerToNext: {
-      borderBottomLeftRadius: 3,
+      borderBottomLeftRadius: 15,
     },
     containerToPrevious: {
-      borderTopLeftRadius: 3,
+      borderTopLeftRadius: 15,
     },
   }),
   right: StyleSheet.create({
@@ -149,10 +149,10 @@ const styles = {
       justifyContent: 'flex-end',
     },
     containerToNext: {
-      borderBottomRightRadius: 3,
+      borderBottomRightRadius: 15,
     },
     containerToPrevious: {
-      borderTopRightRadius: 3,
+      borderTopRightRadius: 15,
     },
   }),
 };
@@ -210,6 +210,10 @@ Bubble.propTypes = {
     right: View.propTypes.style,
   }),
   containerToPreviousStyle: React.PropTypes.shape({
+    left: View.propTypes.style,
+    right: View.propTypes.style,
+  }),
+  bubbleStyle: React.PropTypes.shape({
     left: View.propTypes.style,
     right: View.propTypes.style,
   }),
