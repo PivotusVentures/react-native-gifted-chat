@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Image,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -13,12 +14,20 @@ export default class Avatar extends React.Component {
       const {renderAvatar, ...avatarProps} = this.props;
       return this.props.renderAvatar(avatarProps);
     }
-    return (
+    const giftedAvatar = (
       <GiftedAvatar
         avatarStyle={StyleSheet.flatten([styles[this.props.position].image, this.props.imageStyle[this.props.position]])}
         user={this.props.currentMessage.user}
       />
     );
+    if (this.props.onAvatarPress) {
+      return (
+        <TouchableOpacity onPress={() => this.props.onAvatarPress(this.props.currentMessage.user)}>
+          {giftedAvatar}
+        </TouchableOpacity>
+      );
+    }
+    return giftedAvatar;
   }
 
   render() {
@@ -77,6 +86,7 @@ Avatar.defaultProps = {
 Avatar.propTypes = {
   isSameDay: React.PropTypes.func,
   isSameUser: React.PropTypes.func,
+  onAvatarPress: React.PropTypes.func,
   position: React.PropTypes.oneOf(['left', 'right']),
   currentMessage: React.PropTypes.object,
   nextMessage: React.PropTypes.object,
