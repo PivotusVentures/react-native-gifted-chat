@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Clipboard,
   StyleSheet,
+  Text,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -28,6 +29,24 @@ export default class Bubble extends React.Component {
       return StyleSheet.flatten([styles[this.props.position].containerToPrevious, this.props.containerToPreviousStyle[this.props.position]]);
     }
     return null;
+  }
+
+  /**
+   *  Renders the text above the chat bubble.
+   *  It only renders the text above the first message of the same user.
+   *  And only for other participants of the conversation, not the current user.
+   */
+  renderPreBubbleText() {
+    // Only render text for other participants of the conversation
+    if (this.props.position === 'left') {
+      // Only render when it is a different user.
+      if (!this.props.isSameUser(this.props.currentMessage, this.props.previousMessage))
+        return (
+          <Text style={styles.left.preBubbleContainer}>
+            {this.props.currentMessage.user.name}
+          </Text>
+        );
+    }
   }
 
   renderMessageText() {
@@ -81,16 +100,16 @@ export default class Bubble extends React.Component {
         ];
         const cancelButtonIndex = options.length - 1;
         this.context.actionSheet().showActionSheetWithOptions({
-          options,
-          cancelButtonIndex,
-        },
-        (buttonIndex) => {
-          switch (buttonIndex) {
-            case 0:
-              Clipboard.setString(this.props.currentMessage.text);
-              break;
-          }
-        });
+            options,
+            cancelButtonIndex,
+          },
+          (buttonIndex) => {
+            switch (buttonIndex) {
+              case 0:
+                Clipboard.setString(this.props.currentMessage.text);
+                break;
+            }
+          });
       }
     }
   }
@@ -98,6 +117,7 @@ export default class Bubble extends React.Component {
   render() {
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
+        {this.renderPreBubbleText()}
         <View style={[styles[this.props.position].wrapper, this.props.wrapperStyle[this.props.position], this.handleBubbleToNext(), this.handleBubbleToPrevious(), this.props.bubbleStyle[this.props.position]]}>
           <TouchableWithoutFeedback
             onLongPress={this.onLongPress}
@@ -135,6 +155,10 @@ const styles = {
     containerToPrevious: {
       borderTopLeftRadius: 15,
     },
+    preBubbleContainer: {
+      paddingLeft: 16,
+      color: 'rgb(178, 187, 197)'
+    }
   }),
   right: StyleSheet.create({
     container: {
