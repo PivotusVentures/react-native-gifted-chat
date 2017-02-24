@@ -37,17 +37,18 @@ export default class Bubble extends React.Component {
    *  And only for other participants of the conversation, not the current user.
    */
   renderPreBubbleText() {
-    // Only render text for other participants of the conversation
-    if (this.props.position === 'left') {
-      // Only render when it is a different user.
-      if (!this.props.isSameUser(this.props.currentMessage, this.props.previousMessage))
-        if (this.props.currentMessage.user.name) {
-          return (
-            <Text style={styles.left.preBubbleContainer}>
-              {this.props.currentMessage.user.name}
-            </Text>
-          );
-        }
+    // Render text if it exists and only for other participants of the conversation
+    if (this.props.currentMessage.user.name && this.props.position === 'left') {
+      const isSameUser = this.props.isSameUser(this.props.currentMessage, this.props.previousMessage);
+      const isSameDay = this.props.isSameDay(this.props.currentMessage, this.props.previousMessage)
+      // Render when it is a different user or not the same day.
+      if (!isSameUser || !isSameDay) {
+        return (
+          <Text style={styles.left.preBubbleContainer}>
+            {this.props.currentMessage.user.name}
+          </Text>
+        );
+      }
     }
   }
 
