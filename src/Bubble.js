@@ -41,11 +41,13 @@ export default class Bubble extends React.Component {
     if (this.props.position === 'left') {
       // Only render when it is a different user.
       if (!this.props.isSameUser(this.props.currentMessage, this.props.previousMessage))
-        return (
-          <Text style={styles.left.preBubbleContainer}>
-            {this.props.currentMessage.user.name}
-          </Text>
-        );
+        if (this.props.currentMessage.user.name) {
+          return (
+            <Text style={styles.left.preBubbleContainer}>
+              {this.props.currentMessage.user.name}
+            </Text>
+          );
+        }
     }
   }
 
