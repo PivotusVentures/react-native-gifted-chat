@@ -13,7 +13,9 @@ import Day from './Day';
 export default class Message extends React.Component {
 
   isSameDay(currentMessage = {}, diffMessage = {}) {
+
     let diff = 0;
+
     if (diffMessage.createdAt && currentMessage.createdAt) {
       diff = Math.abs(moment(diffMessage.createdAt).startOf('day').diff(moment(currentMessage.createdAt).startOf('day'), 'days'));
     } else {
@@ -34,6 +36,13 @@ export default class Message extends React.Component {
     return false;
   }
 
+  wasIdle(currentMessage = {}, diffMessage = {}) {
+    if (diffMessage.createdAt && currentMessage.createdAt) {
+      return currentMessage.createdAt['$date'] - diffMessage.createdAt['$date'] >= 600000 ? true : false
+    }
+    return false;
+  }
+
   renderDay() {
     if (this.props.currentMessage.createdAt) {
       const {containerStyle, ...other} = this.props;
@@ -41,6 +50,7 @@ export default class Message extends React.Component {
         ...other,
         isSameUser: this.isSameUser,
         isSameDay: this.isSameDay,
+        wasIdle: this.wasIdle,
       };
       if (this.props.renderDay) {
         return this.props.renderDay(dayProps);
@@ -56,6 +66,7 @@ export default class Message extends React.Component {
       ...other,
       isSameUser: this.isSameUser,
       isSameDay: this.isSameDay,
+      wasIdle: this.wasIdle,
     };
     if (this.props.renderBubble) {
       return this.props.renderBubble(bubbleProps);
@@ -70,6 +81,7 @@ export default class Message extends React.Component {
         ...other,
         isSameUser: this.isSameUser,
         isSameDay: this.isSameDay,
+        wasIdle: this.wasIdle,
       };
 
       return <Avatar {...avatarProps}/>;
