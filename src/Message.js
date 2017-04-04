@@ -13,9 +13,7 @@ import Day from './Day';
 export default class Message extends React.Component {
 
   isSameDay(currentMessage = {}, diffMessage = {}) {
-
     let diff = 0;
-
     if (diffMessage.createdAt && currentMessage.createdAt) {
       diff = Math.abs(moment(diffMessage.createdAt).startOf('day').diff(moment(currentMessage.createdAt).startOf('day'), 'days'));
     } else {
