@@ -40,9 +40,10 @@ export default class Bubble extends React.Component {
     // Render text if it exists and only for other participants of the conversation
     if (this.props.currentMessage.user.name && this.props.position === 'left') {
       const isSameUser = this.props.isSameUser(this.props.currentMessage, this.props.previousMessage);
-      const isSameDay = this.props.isSameDay(this.props.currentMessage, this.props.previousMessage)
-      // Render when it is a different user or not the same day.
-      if (!isSameUser || !isSameDay) {
+      const isSameDay = this.props.isSameDay(this.props.currentMessage, this.props.previousMessage);
+      const isTenMinutes = this.props.wasIdle(this.props.currentMessage, this.props.previousMessage);
+      // Render when it is a different user or not the same day or when the same user is idle for longer than 10 minutes.
+      if (!isSameUser || !isSameDay || (isSameUser && isTenMinutes)) {
         return (
           <Text style={styles.left.preBubbleContainer}>
             {this.props.currentMessage.user.name}
@@ -197,6 +198,7 @@ Bubble.defaultProps = {
   renderTime: null,
   isSameUser: () => {},
   isSameDay: () => {},
+  wasIdle: () => {},
   position: 'left',
   currentMessage: {
     text: null,
@@ -220,6 +222,7 @@ Bubble.propTypes = {
   renderTime: React.PropTypes.func,
   isSameUser: React.PropTypes.func,
   isSameDay: React.PropTypes.func,
+  wasIdle: React.PropTypes.func,
   position: React.PropTypes.oneOf(['left', 'right']),
   currentMessage: React.PropTypes.object,
   nextMessage: React.PropTypes.object,
