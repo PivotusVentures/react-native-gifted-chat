@@ -49,6 +49,7 @@ class GiftedChat extends React.Component {
     this._isTypingDisabled = false;
     this._locale = 'en';
     this._messages = [];
+    this._typingTimer = null;
 
     this.state = {
       isInitialized: false, // initialization will calculate maxHeight before rendering the chat
@@ -366,6 +367,16 @@ class GiftedChat extends React.Component {
         messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
       };
     });
+
+    if (this._typingTimer) {
+      clearTimeout(this._typingTimer)
+    }
+
+    this._typingTimer = setTimeout(() => {
+      this.props.onTypingSignallerCb(true)
+    }, 3000)
+
+    this.props.onTypingSignallerCb(false)
   }
 
   renderInputToolbar() {
