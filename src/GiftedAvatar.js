@@ -68,7 +68,7 @@ export default class GiftedAvatar extends React.Component {
   }
 
   render() {
-    if (!this.props.user.name && !this.props.user.avatar) {
+    if ((!this.props.user.name && !this.props.user.avatar) || !this.props.user._id) {
       // render placeholder
       return (
         <View style={[
