@@ -368,15 +368,15 @@ class GiftedChat extends React.Component {
       };
     });
 
-    if (this._typingTimer) {
-      clearTimeout(this._typingTimer)
-    }
-
-    this._typingTimer = setTimeout(() => {
-      this.props.onTypingSignallerCb(true)
-    }, 3000)
-
-    this.props.onTypingSignallerCb(false)
+    // if (this._typingTimer) {
+    //   clearTimeout(this._typingTimer)
+    // }
+    //
+    // this._typingTimer = setTimeout(() => {
+    //   this.props.onTypingSignallerCb(true)
+    // }, 3000)
+    //
+    // this.props.onTypingSignallerCb(false)
   }
 
   renderInputToolbar() {
