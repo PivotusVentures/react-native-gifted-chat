@@ -13,7 +13,7 @@ export default class LoadEarlier extends React.Component {
     if (this.props.isLoadingEarlier === false) {
       return (
         <Text style={[styles.text, this.props.textStyle]}>
-          {this.props.label}
+          {this.props.loadMoreLabel}
         </Text>
       );
     }
@@ -22,7 +22,7 @@ export default class LoadEarlier extends React.Component {
         <Text style={[styles.text, this.props.textStyle, {
             opacity: 0,
           }]}>
-          {this.props.label}
+          {this.props.loadMoreLabel}
         </Text>
         <ActivityIndicator
           color='white'

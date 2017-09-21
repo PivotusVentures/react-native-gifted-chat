@@ -9,7 +9,7 @@ export default class Composer extends React.Component {
   render() {
     return (
       <TextInput
-        placeholder={this.props.placeholder}
+        placeholder={this.props.typeMessagePlaceholder}
         placeholderTextColor={this.props.placeholderTextColor}
         multiline={this.props.multiline}
         onChange={(e) => {

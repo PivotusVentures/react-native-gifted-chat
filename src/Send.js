@@ -22,7 +22,7 @@ export default class Send extends React.Component {
             this.props.onSend({text: this.props.text.trim()}, true);
           }}
         >
-          <Text style={[styles.text, this.props.textStyle]}>{this.props.label}</Text>
+          <Text style={[styles.text, this.props.textStyle]}>{this.props.sendLabel}</Text>
         </TouchableOpacity>
       );
     }
